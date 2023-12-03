@@ -75,10 +75,6 @@ const NavBar = () => {
               <Link to="/" component={RouterLink}>
                 Home
               </Link>
-              <Link to="/products" component={RouterLink}>
-                Products
-              </Link>
-             
             </Stack>
           </Container>
         </Paper>
