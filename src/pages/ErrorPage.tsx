@@ -1,11 +1,8 @@
+import React from 'react';
+
 import { Link } from 'react-router-dom';
 
-import {
-  Box,
-  Button,
-  Container,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 
 const NotFoundPage: React.FC = () => {
   return (
