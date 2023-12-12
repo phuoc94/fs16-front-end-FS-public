@@ -13,7 +13,14 @@ import {
   Typography,
 } from '@mui/material';
 
+import SearchBox from '../../components/topnavbar/SearchBox';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import AccountPopover from './AccountPopover';
+import CartDrawer from './CartDrawer';
+
 const NavBar = () => {
+  const { profile } = useAppSelector((state) => state.auth);
+  const isAdmin = profile?.role === 'admin';
   return (
     <Box sx={{ flexGrow: 1 }} marginTop="135px">
       <AppBar position="fixed">
@@ -60,6 +67,15 @@ const NavBar = () => {
                 LOGO
               </Typography>
             </Grid>
+            <Grid item order={{ md: 3 }}>
+              <Stack direction="row" spacing={2}>
+                <AccountPopover />
+                <CartDrawer />
+              </Stack>
+            </Grid>
+            <Grid item xs={12} md={8} order={{ md: 2 }}>
+              <SearchBox />
+            </Grid>
           </Grid>
         </Container>
         <Paper
@@ -75,6 +91,14 @@ const NavBar = () => {
               <Link to="/" component={RouterLink}>
                 Home
               </Link>
+              <Link to="/products" component={RouterLink}>
+                Products
+              </Link>
+              {isAdmin && (
+                <Link to="/create-product" component={RouterLink}>
+                  Add Product
+                </Link>
+              )}
             </Stack>
           </Container>
         </Paper>
