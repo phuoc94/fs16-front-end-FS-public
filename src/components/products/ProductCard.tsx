@@ -65,7 +65,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
                   ? `${product.description.slice(0, 40)}...`
                   : product.description}
               </Typography>
-              <Typography variant="h6">{product.price} €</Typography>
             </CardContent>
           </CardActionArea>
         </Link>

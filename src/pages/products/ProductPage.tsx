@@ -90,7 +90,6 @@ const ProductPage = () => {
             <Typography variant="h4">{product.title}</Typography>
             <Typography variant="body1">{product.description}</Typography>
             <Box display={'flex'} justifyContent={'space-around'}>
-              <Typography variant="h3">{product.price} €</Typography>
               <Box display={'flex'} gap={1}>
                 <IconButton
                   aria-label="decrease"

@@ -66,12 +66,6 @@ const CartDrawer = () => {
           </Box>
 
           <Box padding={2}>
-            <Box display={'flex'} justifyContent="space-between">
-              <Typography>Total</Typography>
-              <Typography variant="h6" fontWeight="bold">
-                {totalPrice} €
-              </Typography>
-            </Box>
             <Stack gap={2} marginTop={2}>
               <Button fullWidth variant="contained" onClick={handleCheckout}>
                 Checkout

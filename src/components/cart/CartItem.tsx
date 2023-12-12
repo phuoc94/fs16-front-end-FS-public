@@ -75,7 +75,6 @@ const CartItem = ({ item }: CartItemProps) => {
             <Typography variant="h6">{item.title}</Typography>
           </Grid>
           <Grid item>
-            <Typography>{item.price} € / pcs</Typography>
             <Box display={'flex'} gap={1}>
               <IconButton
                 aria-label="decrease"
@@ -123,9 +122,6 @@ const CartItem = ({ item }: CartItemProps) => {
             >
               <DeleteIcon />
             </IconButton>
-          </Grid>
-          <Grid item>
-            <Typography variant="h6">{item.price * item.quantity} €</Typography>
           </Grid>
         </Grid>
       </Grid>

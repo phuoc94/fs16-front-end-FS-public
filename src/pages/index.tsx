@@ -1,11 +1,11 @@
 import { Box } from '@mui/material';
 
-import ListOfCategories from '../containers/homepage/ListOfCategories';
+import ProductsPage from './products/ProductsPage';
 
 const HomePage = () => {
   return (
     <Box>
-      <ListOfCategories />
+      <ProductsPage />
     </Box>
   );
 };
