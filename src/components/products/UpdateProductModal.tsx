@@ -27,7 +27,6 @@ type UpdateProductModalProps = {
 
 interface NewProduct {
   title: string;
-  price: string;
   description: string;
   category: number;
 }
@@ -48,7 +47,6 @@ const UpdateProductModal = ({
 }: UpdateProductModalProps) => {
   const [updatedProduct, setUpdatedProduct] = useState<NewProduct>({
     title: product.title,
-    price: product.price.toString(),
     description: product.description,
     category: product.category.id,
   });
@@ -60,7 +58,6 @@ const UpdateProductModal = ({
 
     const productData = {
       ...updatedProduct,
-      price: Number(updatedProduct.price),
       categoryId: updatedProduct.category,
       images: [
         'https://picsum.photos/639/480',
@@ -122,18 +119,6 @@ const UpdateProductModal = ({
             margin="normal"
             required
             fullWidth
-            name="price"
-            label="Price"
-            type="number"
-            id="price"
-            autoComplete="off"
-            value={updatedProduct.price}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
             name="description"
             label="Description"
             multiline
@@ -149,7 +134,6 @@ const UpdateProductModal = ({
               labelId="category"
               id="category"
               label="Category"
-              value={updatedProduct.category.toString()}
               onChange={handleCategoryChange}
             >
               {categories.length > 0 &&

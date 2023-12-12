@@ -66,7 +66,7 @@ const CartItem = ({ item }: CartItemProps) => {
     >
       <Grid item xs={3}>
         <ButtonBase sx={{ width: 64, height: 64 }}>
-          <Img alt="complex" src={item.images[0]} />
+          <Img alt="complex" src={item.img} />
         </ButtonBase>
       </Grid>
       <Grid item xs={6}>

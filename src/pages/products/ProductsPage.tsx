@@ -92,7 +92,7 @@ const ProductsPage = () => {
         sx={{ paddingTop: '2rem', paddingBottom: '1rem' }}
         align="center"
       >
-        Products
+        Books
       </Typography>
       <Grid container spacing={2}>
         <Filters />

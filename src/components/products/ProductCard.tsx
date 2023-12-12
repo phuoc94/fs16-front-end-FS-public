@@ -1,6 +1,5 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { Delete, Edit } from '@mui/icons-material';
@@ -28,26 +27,10 @@ type ProductCardProps = {
 };
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const [imgSrc, setImgSrc] = useState(
-    `https://docketevents.com/assets/images/image_placeholder.jpg`,
-  );
   const [openModal, setOpenModal] = useState(false);
 
   const { profile } = useAppSelector((state) => state.auth);
   const { categories } = useAppSelector((state) => state.categories);
-
-  useEffect(() => {
-    const checkImageLoaded = async () => {
-      for (const image of product.images) {
-        try {
-          await axios.get(image);
-          setImgSrc(image);
-          break;
-        } catch (error) {}
-      }
-    };
-    checkImageLoaded();
-  }, [product]);
 
   const dispatch = useAppDispatch();
 
@@ -72,7 +55,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               component="img"
               alt={product.title}
               height="140"
-              image={imgSrc}
+              image={product.img}
               title={product.title}
             />
             <CardContent>

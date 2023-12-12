@@ -7,7 +7,6 @@ import { CATEGORY_API_URL, PRODUCT_API_URL } from '../../utils/constants';
 
 export interface AddProductRequest {
   title: string;
-  price: number;
   description: string;
   categoryId: number;
   images: string[];
@@ -55,8 +54,9 @@ export const fetchProducts = createAsyncThunk(
       filters.price_max = 9999999999;
     }
 
-    const response = await axios.get(PRODUCT_API_URL, { params: filters });
-    return response.data;
+    const response = await axios.get(PRODUCT_API_URL);
+    console.log('🚀 ~ file: product.actions.ts:62 ~ response:', response);
+    return response.data.data;
   },
 );
 

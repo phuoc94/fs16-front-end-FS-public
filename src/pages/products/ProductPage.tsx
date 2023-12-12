@@ -78,7 +78,7 @@ const ProductPage = () => {
     <Container>
       <Grid container>
         <Grid item xs={12} md={6} sx={{ justifyContent: 'center' }}>
-          <ImageDisplay imageUrls={product.images} />
+          <ImageDisplay imageUrl={product.img} />
         </Grid>
         <Grid item xs={12} md={6}>
           <Box
