@@ -8,12 +8,12 @@ import { CATEGORY_API_URL, PRODUCT_API_URL } from '../../utils/constants';
 export interface AddProductRequest {
   title: string;
   description: string;
-  categoryId: number;
-  images: string[];
+  categoryId: string;
+  images: string;
 }
 
 export interface ProductFilter {
-  categoryId?: number;
+  categoryId?: string;
   price_min?: number;
   price_max?: number;
 }

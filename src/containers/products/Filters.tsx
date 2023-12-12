@@ -11,7 +11,6 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  TextField,
   Typography,
 } from '@mui/material';
 
@@ -31,14 +30,6 @@ const Filters = () => {
   useEffect(() => {
     dispatch(fetchProducts(debouncedFilter));
   }, [dispatch, debouncedFilter]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFilters({
-      ...filters,
-      [name]: value,
-    });
-  };
 
   const handleChangeCategory = (event: SelectChangeEvent) => {
     setSelectedCategory(event.target.value);
@@ -89,36 +80,6 @@ const Filters = () => {
                 ))}
             </Select>
           </FormControl>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion defaultExpanded>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="price-filter"
-          id="price-filter"
-        >
-          <Typography>Price</Typography>
-        </AccordionSummary>
-        <AccordionDetails
-          sx={{ display: 'flex', justifyContent: 'space-between' }}
-        >
-          <TextField
-            id="price_min"
-            label="Min Price"
-            variant="standard"
-            sx={{ maxWidth: '80px' }}
-            name="price_min"
-            onChange={handleChange}
-          />
-          <Typography variant="h3">-</Typography>
-          <TextField
-            id="price_max"
-            label="Max Price"
-            variant="standard"
-            name="price_max"
-            sx={{ maxWidth: '80px' }}
-            onChange={handleChange}
-          />
         </AccordionDetails>
       </Accordion>
     </Grid>

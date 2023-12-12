@@ -73,12 +73,8 @@ const CreateProductPage: React.FC = () => {
     const productData = {
       ...newProduct,
       price: Number(newProduct.price),
-      categoryId: Number(newProduct.category),
-      images: [
-        'https://picsum.photos/639/480',
-        'https://picsum.photos/640/480',
-        'https://picsum.photos/641/480',
-      ],
+      categoryId: newProduct.category,
+      images: 'https://picsum.photos/641/480',
     };
 
     try {

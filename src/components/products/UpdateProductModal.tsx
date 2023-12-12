@@ -28,7 +28,7 @@ type UpdateProductModalProps = {
 interface NewProduct {
   title: string;
   description: string;
-  category: number;
+  category: string;
 }
 
 const style = {
@@ -59,11 +59,7 @@ const UpdateProductModal = ({
     const productData = {
       ...updatedProduct,
       categoryId: updatedProduct.category,
-      images: [
-        'https://picsum.photos/639/480',
-        'https://picsum.photos/640/480',
-        'https://picsum.photos/641/480',
-      ],
+      images: 'https://picsum.photos/641/480',
     };
 
     try {
@@ -90,7 +86,7 @@ const UpdateProductModal = ({
     const { value } = e.target;
     setUpdatedProduct({
       ...updatedProduct,
-      category: Number(value),
+      category: value,
     });
   };
 

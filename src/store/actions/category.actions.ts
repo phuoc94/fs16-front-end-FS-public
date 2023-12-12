@@ -19,7 +19,7 @@ export const fetchCategories = createAsyncThunk(
 
 export const fetchCategory = createAsyncThunk(
   'category/fetchCategory',
-  async (id: number): Promise<Category> => {
+  async (id: string): Promise<Category> => {
     try {
       const response = await axios.get(`${CATEGORY_API_URL}/${id}`);
       return response.data;

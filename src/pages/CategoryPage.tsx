@@ -20,7 +20,7 @@ const CategoryPage = () => {
 
   useEffect(() => {
     if (categoryId) {
-      dispatch(fetchCategory(Number(categoryId)));
+      dispatch(fetchCategory(categoryId));
     }
   }, [categoryId, dispatch]);
 

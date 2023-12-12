@@ -18,9 +18,7 @@ import CartItem from '../../components/cart/CartItem';
 import { useAppSelector } from '../../hooks/useAppSelector';
 
 const CartDrawer = () => {
-  const { totalItems, cartItems, totalPrice } = useAppSelector(
-    (state) => state.cart,
-  );
+  const { totalItems, cartItems } = useAppSelector((state) => state.cart);
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const navigate = useNavigate();
