@@ -7,14 +7,8 @@ import CardMedia from '@mui/material/CardMedia/CardMedia';
 
 import { useSnackbar } from '../contexts/SnackbarContext';
 import { addToCart } from '../store/slices/cartSlice';
+import { Book } from '../store/types/booksTypes';
 import { noImageAvailable } from '../utils/const';
-
-interface Book {
-  _id: string;
-  title: string;
-  img?: string;
-  author: Array<{ firstName: string; lastName: string }>;
-}
 
 interface BookCardProps {
   book: Book;
@@ -41,7 +35,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
           {book.title}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          by {book.author.map((a) => a.firstName + ' ' + a.lastName).join(', ')}
+          by {book.author.map((a) => a.fullName)}
         </Typography>
         <Button
           variant="contained"
