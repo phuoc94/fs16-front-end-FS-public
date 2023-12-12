@@ -10,7 +10,12 @@ export const fetchCategories = createAsyncThunk(
   async (): Promise<Category[]> => {
     try {
       const response = await axios.get(CATEGORY_API_URL);
-      return response.data;
+      const categories = response.data.map((category: Category) => ({
+        ...category,
+        id: category._id,
+        _id: undefined,
+      }));
+      return categories;
     } catch (error) {
       throw error;
     }

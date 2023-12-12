@@ -55,7 +55,6 @@ export const fetchProducts = createAsyncThunk(
     }
 
     const response = await axios.get(PRODUCT_API_URL);
-    console.log('🚀 ~ file: product.actions.ts:62 ~ response:', response);
     return response.data.data;
   },
 );
