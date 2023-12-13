@@ -123,7 +123,7 @@ const ProductsPage = () => {
               <CircularProgress />
             ) : displayedProducts && displayedProducts.length > 0 ? (
               displayedProducts.map((product) => (
-                <Grid item xs={12} sm={6} md={4} key={product.id}>
+                <Grid item xs={12} sm={6} md={4} key={product.title}>
                   <ProductCard product={product} />
                 </Grid>
               ))
