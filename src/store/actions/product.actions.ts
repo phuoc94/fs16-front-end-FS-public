@@ -74,7 +74,10 @@ export const fetchProduct = createAsyncThunk(
   'products/fetchProduct',
   async (productId: string): Promise<Product> => {
     const response = await axios.get(`${PRODUCT_API_URL}/${productId}`);
-    return response.data;
+
+    const product = { ...response.data, id: response.data._id, _id: undefined };
+
+    return product;
   },
 );
 
