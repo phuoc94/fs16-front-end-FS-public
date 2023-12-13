@@ -4,7 +4,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { User } from '../../types/user.types';
 import { AUTH_API_URL } from '../../utils/constants';
-import { setCookies } from '../../utils/cookies';
 
 interface LoginCredentials {
   email: string;
@@ -16,23 +15,20 @@ interface RefreshTokenBody {
 }
 
 interface ApiResponse {
-  access_token: string;
-  refresh_token: string;
+  accessToken: string;
 }
 
 export const login = createAsyncThunk(
   'auth/login',
   async (credentials: LoginCredentials) => {
     const response: AxiosResponse<ApiResponse> = await axios.post<ApiResponse>(
-      `${AUTH_API_URL}/login`,
+      `${AUTH_API_URL}/signin`,
       credentials,
     );
 
-    const { access_token, refresh_token } = response.data;
+    const { accessToken } = response.data;
 
-    setCookies('refreshToken', refresh_token, 3600);
-
-    return access_token;
+    return accessToken;
   },
 );
 
@@ -47,11 +43,9 @@ export const fetchNewAccessToken = createAsyncThunk(
       `${AUTH_API_URL}/refresh-token`,
       body,
     );
-    const { access_token, refresh_token } = response.data;
+    const { accessToken } = response.data;
 
-    setCookies('refreshToken', refresh_token, 3600);
-
-    return access_token;
+    return accessToken;
   },
 );
 
