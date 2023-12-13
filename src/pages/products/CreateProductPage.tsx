@@ -35,6 +35,7 @@ interface NewProduct {
   description: string;
   category: string;
   author: string[];
+  img: string;
 }
 
 const CreateProductPage: React.FC = () => {
@@ -44,6 +45,7 @@ const CreateProductPage: React.FC = () => {
     description: '',
     category: '',
     author: [],
+    img: '',
   });
   const [showError, setShowError] = useState(false);
 
@@ -102,13 +104,8 @@ const CreateProductPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const productData = {
-      ...newProduct,
-      images: 'https://picsum.photos/641/480',
-    };
-
     try {
-      await dispatch(addProduct(productData));
+      await dispatch(addProduct(newProduct));
       navigate('/');
     } catch (err) {
       setShowError(true);
@@ -157,7 +154,6 @@ const CreateProductPage: React.FC = () => {
                 id="ISBN"
                 name="ISBN"
                 autoComplete="off"
-                autoFocus
                 value={newProduct.ISBN}
                 onChange={handleChange}
                 label="ISBN"
@@ -225,6 +221,18 @@ const CreateProductPage: React.FC = () => {
                   placeholder="Select Author(s)"
                 />
               )}
+            />
+
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="img"
+              label="Image URL"
+              name="img"
+              autoComplete="off"
+              value={newProduct.img}
+              onChange={handleChange}
             />
 
             <Button

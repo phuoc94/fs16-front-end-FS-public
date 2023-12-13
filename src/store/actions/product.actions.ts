@@ -10,7 +10,7 @@ export interface AddProductRequest {
   title: string;
   description: string;
   category: string;
-  images: string;
+  img: string;
 }
 
 export interface ProductFilter {

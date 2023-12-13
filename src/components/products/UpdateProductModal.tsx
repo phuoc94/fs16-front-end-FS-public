@@ -29,6 +29,7 @@ interface NewProduct {
   title: string;
   description: string;
   category: string;
+  img: string;
 }
 
 const style = {
@@ -49,6 +50,7 @@ const UpdateProductModal = ({
     title: product.title,
     description: product.description,
     category: product.category.id,
+    img: product.img,
   });
 
   const dispatch = useAppDispatch();
@@ -56,14 +58,8 @@ const UpdateProductModal = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const productData = {
-      ...updatedProduct,
-      categoryId: updatedProduct.category,
-      images: 'https://picsum.photos/641/480',
-    };
-
     try {
-      dispatch(updateProduct({ product: productData, id: product.id }));
+      dispatch(updateProduct({ product: updatedProduct, id: product.id }));
       handle();
     } catch (err) {
       console.error('error', err);
