@@ -106,10 +106,10 @@ const ProductPage = () => {
             <Button
               variant="contained"
               fullWidth
-              disabled={isItemInCart || false}
+              disabled={product.availableCopies === 0 || isItemInCart || false}
               onClick={handleAddItemToCart}
             >
-              Add to Cart
+              {product.availableCopies === 0 ? 'Out of Stock' : 'Add to Cart'}
             </Button>
           </Box>
         </Grid>

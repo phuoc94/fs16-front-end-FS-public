@@ -89,8 +89,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
               </IconButton>
             </Fragment>
           )}
-          <Button onClick={handleAddToCart} disabled={isInCart(product)}>
-            Add to Cart
+          <Button
+            onClick={handleAddToCart}
+            disabled={product.availableCopies === 0 || isInCart(product)}
+          >
+            {product.availableCopies === 0 ? 'Out of Stock' : 'Add to Cart'}
           </Button>
         </CardActions>
       </Card>

@@ -13,6 +13,7 @@ export interface Product {
   publisher: string;
   edition: string;
   ISBN: string;
+  availableCopies: number;
 }
 export type Copy = {
   _id: string;

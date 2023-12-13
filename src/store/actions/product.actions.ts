@@ -83,8 +83,21 @@ export const fetchProduct = createAsyncThunk(
   'products/fetchProduct',
   async (productId: string): Promise<Product> => {
     const response = await axios.get(`${PRODUCT_API_URL}/${productId}`);
+    const productData = response.data;
 
-    const product = { ...response.data, id: response.data._id, _id: undefined };
+    const copiesResponse = await axios.get(`${PRODUCT_API_URL}/copy`);
+    const copies = copiesResponse.data;
+
+    const availableCopies = copies.filter(
+      (copy: Copy) => copy.book_id === productId && copy.is_Available === true,
+    ).length;
+
+    const product = {
+      ...productData,
+      id: productData._id,
+      _id: undefined,
+      availableCopies: availableCopies,
+    };
 
     return product;
   },
