@@ -10,7 +10,7 @@ import { cookies } from '../utils/cookies';
 const AdminRoutes: React.FC = () => {
   const { accessToken, profile } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const isAdmin = profile?.role === 'admin';
+  const isAdmin = profile?.role.title === 'Admin';
 
   useEffect(() => {
     const refreshToken = cookies.get('refreshToken');

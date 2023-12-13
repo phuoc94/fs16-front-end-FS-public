@@ -20,7 +20,7 @@ import CartDrawer from './CartDrawer';
 
 const NavBar = () => {
   const { profile } = useAppSelector((state) => state.auth);
-  const isAdmin = profile?.role === 'admin';
+  const isAdmin = profile?.role.title === 'admin';
   return (
     <Box sx={{ flexGrow: 1 }} marginTop="135px">
       <AppBar position="fixed">

@@ -1,6 +1,5 @@
 import { Fragment } from 'react';
 
-import { faker } from '@faker-js/faker';
 import {
   AccountBox,
   Edit,
@@ -65,15 +64,17 @@ const ProfilePage = () => {
                 <Stack marginTop={2} marginBottom={2} gap={1}>
                   <Box display={'flex'} gap={2}>
                     <PersonOutlineOutlined />
-                    <Typography>{profile.name}</Typography>
+                    <Typography>
+                      {profile.firstName} {profile.lastName}
+                    </Typography>
                   </Box>
                   <Box display={'flex'} gap={2}>
                     <LocationOnOutlined />
-                    <Typography>{faker.location.streetAddress()}</Typography>
+                    <Typography>{profile.address}</Typography>
                   </Box>
                   <Box display={'flex'} gap={2}>
                     <LocalPhoneOutlined />
-                    <Typography>{faker.phone.number()}</Typography>
+                    <Typography>{profile.phoneNumber}</Typography>
                   </Box>
                   <Box display={'flex'} gap={2}>
                     <EmailOutlined />
