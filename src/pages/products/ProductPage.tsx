@@ -81,26 +81,31 @@ const ProductPage = () => {
             <Typography variant="h4">{product.title}</Typography>
             <Typography variant="body1">{product.description}</Typography>
 
-            {/* Additional Fields */}
-            <Typography variant="subtitle1">ISBN: {product.ISBN}</Typography>
             <Typography variant="subtitle1">
-              Edition: {product.edition ? product.edition : 'unknown'}
+              <strong>ISBN:</strong> {product.ISBN}
             </Typography>
             <Typography variant="subtitle1">
-              Publisher: {product.publisher ? product.publisher : 'unknown'}
+              <strong>Edition:</strong>{' '}
+              {product.edition ? product.edition : 'unknown'}
             </Typography>
             <Typography variant="subtitle1">
-              Categories:{' '}
+              <strong>Publisher:</strong>{' '}
+              {product.publisher ? product.publisher : 'unknown'}
+            </Typography>
+            <Typography variant="subtitle1">
+              <strong>Categories:</strong>{' '}
               {product.category && product.category.length > 0
                 ? product.category.map((a) => a.name).join(', ')
                 : 'unknown'}
             </Typography>
-
             <Typography variant="subtitle1">
-              Authors:{' '}
+              <strong>Authors:</strong>{' '}
               {product.author && product.author.length > 0
                 ? product.author.map((a) => a.fullName).join(', ')
                 : 'unknown'}
+            </Typography>
+            <Typography variant="subtitle1">
+              <strong>Available:</strong> {product.availableCopies}
             </Typography>
 
             <Button

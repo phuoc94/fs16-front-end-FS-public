@@ -68,6 +68,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 {`Authors: ${product.author
                   .map((author) => author.fullName)
                   .join(', ')}`}
+
+                <br />
+                {`Available: ${product.availableCopies}`}
               </Typography>
             </CardContent>
           </CardActionArea>

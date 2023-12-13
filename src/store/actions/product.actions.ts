@@ -19,6 +19,7 @@ export interface ProductFilter {
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';
   filter?: 0 | 1;
+  perPage?: number;
 }
 
 export const addProduct = createAsyncThunk(
@@ -57,6 +58,7 @@ export const fetchProducts = createAsyncThunk(
     }
 
     filters.filter = 1;
+    filters.perPage = 1000;
 
     const response = await axios.get(PRODUCT_API_URL, { params: filters });
     const copies = await axios.get(`${PRODUCT_API_URL}/copy`);
