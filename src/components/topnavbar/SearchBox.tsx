@@ -48,16 +48,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const SearchBox = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [hasTyped, setHasTyped] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const dispatch = useAppDispatch();
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
+    if (!hasTyped) setHasTyped(true);
   };
 
   useEffect(() => {
-    dispatch(fetchProducts({ search: debouncedSearchTerm }));
-  }, [debouncedSearchTerm, dispatch]);
+    if (hasTyped) {
+      dispatch(fetchProducts({ search: debouncedSearchTerm }));
+    }
+  }, [debouncedSearchTerm, dispatch, hasTyped]);
 
   return (
     <Search>
