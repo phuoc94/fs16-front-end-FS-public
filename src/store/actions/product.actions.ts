@@ -8,7 +8,7 @@ import { PRODUCT_API_URL } from '../../utils/constants';
 export interface AddProductRequest {
   title: string;
   description: string;
-  categoryId: string;
+  category: string;
   images: string;
 }
 

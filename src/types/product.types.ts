@@ -1,3 +1,4 @@
+import { Author } from './author.types';
 import { Category } from './category.types';
 
 export interface Product {
@@ -6,6 +7,7 @@ export interface Product {
   price: number;
   description: string;
   category: Category;
+  author: Author[];
   img: string;
   creationAt: string;
 }

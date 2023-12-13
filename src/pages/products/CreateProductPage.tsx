@@ -24,7 +24,9 @@ import {
 
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import { fetchAuthors } from '../../store/actions/author.actions';
 import { addProduct } from '../../store/actions/product.actions';
+import { Author } from '../../types/author.types';
 import { generateISBN13 } from '../../utils/generateISBN';
 
 interface NewProduct {
@@ -34,15 +36,6 @@ interface NewProduct {
   category: string;
   author: string[];
 }
-
-const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-];
 
 const CreateProductPage: React.FC = () => {
   const [newProduct, setProduct] = useState<NewProduct>({
@@ -56,6 +49,8 @@ const CreateProductPage: React.FC = () => {
 
   const { categories } = useAppSelector((state) => state.categories);
   const { error, isLoading } = useAppSelector((state) => state.products);
+  const { authors } = useAppSelector((state) => state.authors);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -64,6 +59,10 @@ const CreateProductPage: React.FC = () => {
       setShowError(true);
     }
   }, [error]);
+
+  useEffect(() => {
+    dispatch(fetchAuthors());
+  }, [dispatch]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -77,15 +76,16 @@ const CreateProductPage: React.FC = () => {
     });
   };
 
-  const handleAuthorChange = (
-    event: React.SyntheticEvent,
-    value: { title: string; year: number }[],
-  ) => {
+  const handleAuthorChange = (event: React.SyntheticEvent, value: Author[]) => {
     setProduct({
       ...newProduct,
-      author: value.map((v) => v.title),
+      author: value.map((author) => author.id),
     });
   };
+
+  const selectedAuthors = authors.filter((author) =>
+    newProduct.author.includes(author.id),
+  );
 
   const handleCategoryChange = (e: SelectChangeEvent<string>) => {
     const { value } = e.target;
@@ -104,7 +104,6 @@ const CreateProductPage: React.FC = () => {
     e.preventDefault();
     const productData = {
       ...newProduct,
-      categoryId: newProduct.category,
       images: 'https://picsum.photos/641/480',
     };
 
@@ -151,18 +150,7 @@ const CreateProductPage: React.FC = () => {
               value={newProduct.title}
               onChange={handleChange}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="author"
-              label="Author"
-              name="author"
-              autoComplete="off"
-              autoFocus
-              value={newProduct.author}
-              onChange={handleChange}
-            />
+
             <FormControl variant="outlined" fullWidth required margin="normal">
               <InputLabel htmlFor="ISBN">ISBN</InputLabel>
               <OutlinedInput
@@ -221,15 +209,11 @@ const CreateProductPage: React.FC = () => {
             <Autocomplete
               multiple
               id="authors"
-              options={top100Films}
-              getOptionLabel={(option) => option.title}
-              value={newProduct.author.map(
-                (author) =>
-                  top100Films.find((film) => film.title === author) || {
-                    title: '',
-                    year: 0,
-                  },
-              )}
+              options={authors}
+              getOptionLabel={(option) =>
+                option.firstName + ' ' + option.lastName
+              }
+              value={selectedAuthors}
               onChange={handleAuthorChange}
               renderInput={(params) => (
                 <TextField
