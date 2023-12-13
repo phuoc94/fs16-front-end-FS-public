@@ -65,9 +65,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
             <CardContent>
               <Typography variant="body1">{product.title}</Typography>
               <Typography variant="caption">
-                {product.description.length > 40
-                  ? `${product.description.slice(0, 40)}...`
-                  : product.description}
+                {`Authors: ${product.author
+                  .map((author) => author.fullName)
+                  .join(', ')}`}
               </Typography>
             </CardContent>
           </CardActionArea>
