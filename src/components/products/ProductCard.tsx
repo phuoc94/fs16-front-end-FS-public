@@ -31,14 +31,18 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const { profile } = useAppSelector((state) => state.auth);
   const { categories } = useAppSelector((state) => state.categories);
+  const { cartItems } = useAppSelector((state) => state.cart);
 
+  const isInCart = (product: Product) => {
+    return cartItems.some((item) => item.ISBN === product.ISBN);
+  };
   const dispatch = useAppDispatch();
 
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(addItemToCart({ product }));
   };
 
-  const handleDeleteProduct = (id: number) => {
+  const handleDeleteProduct = (id: string) => {
     dispatch(deleteProduct(id));
   };
 
@@ -85,7 +89,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               </IconButton>
             </Fragment>
           )}
-          <Button size="small" color="primary" onClick={handleAddToCart}>
+          <Button onClick={handleAddToCart} disabled={isInCart(product)}>
             Add to Cart
           </Button>
         </CardActions>

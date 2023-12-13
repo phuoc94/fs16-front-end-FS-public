@@ -32,12 +32,6 @@ export const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
-    sortByPriceLowToHigh: (state) => {
-      state.products.sort((a, b) => a.price - b.price);
-    },
-    sortByPriceHighToLow: (state) => {
-      state.products.sort((a, b) => b.price - a.price);
-    },
     sortByNewest: (state) => {
       state.products.sort((a, b) => {
         const aDate = new Date(a.creationAt);
@@ -62,12 +56,6 @@ export const productSlice = createSlice({
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
       state.products = action.payload;
       switch (state.sortBy) {
-        case 'priceLow':
-          state.products.sort((a, b) => a.price - b.price);
-          break;
-        case 'priceHigh':
-          state.products.sort((a, b) => b.price - a.price);
-          break;
         case 'newest':
           state.products.sort((a, b) => {
             const aDate = new Date(a.creationAt);
@@ -164,13 +152,7 @@ export const productSlice = createSlice({
   },
 });
 
-export const {
-  sortByNameAZ,
-  sortByNameZA,
-  sortByNewest,
-  sortByPriceHighToLow,
-  sortByPriceLowToHigh,
-  setSortBy,
-} = productSlice.actions;
+export const { sortByNameAZ, sortByNameZA, sortByNewest, setSortBy } =
+  productSlice.actions;
 
 export default productSlice.reducer;

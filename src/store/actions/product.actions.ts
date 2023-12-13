@@ -40,7 +40,7 @@ export const updateProduct = createAsyncThunk(
     id,
   }: {
     product: AddProductRequest;
-    id: number;
+    id: string;
   }): Promise<Product> => {
     const response = await axios.put(`${PRODUCT_API_URL}/${id}`, product);
     return response.data;
@@ -59,7 +59,14 @@ export const fetchProducts = createAsyncThunk(
     filters.filter = 1;
 
     const response = await axios.get(PRODUCT_API_URL, { params: filters });
-    return response.data.data;
+
+    const products = response.data.data.map((product: Product) => ({
+      ...product,
+      id: product._id,
+      _id: undefined,
+    }));
+
+    return products;
   },
 );
 
@@ -83,7 +90,7 @@ export const fetchCategoryProducts = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
   'products/deleteProduct',
-  async (id: number) => {
+  async (id: string) => {
     try {
       await axios.delete(`${PRODUCT_API_URL}/${id}`);
       return id;

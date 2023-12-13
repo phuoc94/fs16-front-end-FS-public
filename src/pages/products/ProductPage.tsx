@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
 
-import { Add, Remove } from '@mui/icons-material';
 import {
   Box,
   Button,
   CircularProgress,
   Container,
   Grid,
-  IconButton,
-  TextField,
   Typography,
 } from '@mui/material';
 
@@ -18,10 +15,7 @@ import ImageDisplay from '../../components/products/ImageDisplay';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { fetchProduct } from '../../store/actions/product.actions';
-import {
-  addItemToCart,
-  setItemQuantity,
-} from '../../store/reducers/cart.slice';
+import { addItemToCart } from '../../store/reducers/cart.slice';
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -32,9 +26,11 @@ const ProductPage = () => {
 
   const { cartItems } = useAppSelector((state) => state.cart);
 
-  const [quantity, setQuantity] = useState(1);
-
   const dispatch = useAppDispatch();
+
+  const isItemInCart = product
+    ? cartItems.some((item) => item.ISBN === product.ISBN)
+    : false;
 
   useEffect(() => {
     if (productId) {
@@ -45,15 +41,10 @@ const ProductPage = () => {
   const handleAddItemToCart = () => {
     const item = cartItems.find((item) => item.id === product?.id);
     if (item) {
-      dispatch(
-        setItemQuantity({
-          id: Number(productId),
-          quantity: item.quantity + quantity,
-        }),
-      );
+      // TODO: handle item already in cart
     } else {
       if (product) {
-        dispatch(addItemToCart({ product, quantity }));
+        dispatch(addItemToCart({ product }));
       }
     }
   };
@@ -89,36 +80,35 @@ const ProductPage = () => {
           >
             <Typography variant="h4">{product.title}</Typography>
             <Typography variant="body1">{product.description}</Typography>
-            <Box display={'flex'} justifyContent={'space-around'}>
-              <Box display={'flex'} gap={1}>
-                <IconButton
-                  aria-label="decrease"
-                  size="large"
-                  disabled={quantity === 1}
-                  onClick={(e) => quantity > 1 && setQuantity(quantity - 1)}
-                >
-                  <Remove fontSize="inherit" />
-                </IconButton>
-                <TextField
-                  variant="outlined"
-                  sx={{
-                    maxWidth: '70px',
-                    '& input': {
-                      textAlign: 'center',
-                    },
-                  }}
-                  value={quantity}
-                />
-                <IconButton
-                  aria-label="increase"
-                  size="large"
-                  onClick={(e) => setQuantity(quantity + 1)}
-                >
-                  <Add fontSize="inherit" />
-                </IconButton>
-              </Box>
-            </Box>
-            <Button variant="contained" fullWidth onClick={handleAddItemToCart}>
+
+            {/* Additional Fields */}
+            <Typography variant="subtitle1">ISBN: {product.ISBN}</Typography>
+            <Typography variant="subtitle1">
+              Edition: {product.edition ? product.edition : 'unknown'}
+            </Typography>
+            <Typography variant="subtitle1">
+              Publisher: {product.publisher ? product.publisher : 'unknown'}
+            </Typography>
+            <Typography variant="subtitle1">
+              Categories:{' '}
+              {product.category && product.category.length > 0
+                ? product.category.map((a) => a.name).join(', ')
+                : 'unknown'}
+            </Typography>
+
+            <Typography variant="subtitle1">
+              Authors:{' '}
+              {product.author && product.author.length > 0
+                ? product.author.map((a) => a.fullName).join(', ')
+                : 'unknown'}
+            </Typography>
+
+            <Button
+              variant="contained"
+              fullWidth
+              disabled={isItemInCart || false}
+              onClick={handleAddItemToCart}
+            >
               Add to Cart
             </Button>
           </Box>

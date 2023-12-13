@@ -1,28 +1,18 @@
-import { useState } from 'react';
-
-import { Add, Remove } from '@mui/icons-material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
-  Box,
   ButtonBase,
   Grid,
   IconButton,
   styled,
-  TextField,
   Typography,
 } from '@mui/material';
 
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import {
-  decreaseItemQuantity,
-  increaseItemQuantity,
-  Item,
-  removeItemFromCart,
-  setItemQuantity,
-} from '../../store/reducers/cart.slice';
+import { removeItemFromCart } from '../../store/reducers/cart.slice';
+import { Product } from '../../types/product.types';
 
 type CartItemProps = {
-  item: Item;
+  item: Product;
 };
 
 const Img = styled('img')({
@@ -33,27 +23,9 @@ const Img = styled('img')({
 });
 
 const CartItem = ({ item }: CartItemProps) => {
-  const [quantity, setQuantity] = useState(item.quantity);
-
   const dispatch = useAppDispatch();
 
-  const handleIncreaseItem = (id: number) => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-    dispatch(increaseItemQuantity({ id }));
-  };
-
-  const handleDecreaseItem = (id: number) => {
-    setQuantity((prevQuantity) => prevQuantity - 1);
-    dispatch(decreaseItemQuantity({ id }));
-  };
-
-  const handleSetItemQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newQuantity = Number(e.target.value);
-    setQuantity(newQuantity);
-    dispatch(setItemQuantity({ id: item.id, quantity: newQuantity }));
-  };
-
-  const handleRemove = (id: number) => {
+  const handleRemove = (id: string) => {
     dispatch(removeItemFromCart({ id }));
   };
 
@@ -73,37 +45,6 @@ const CartItem = ({ item }: CartItemProps) => {
         <Grid container direction={'column'} gap={1}>
           <Grid item>
             <Typography variant="h6">{item.title}</Typography>
-          </Grid>
-          <Grid item>
-            <Box display={'flex'} gap={1}>
-              <IconButton
-                aria-label="decrease"
-                disabled={item.quantity === 1}
-                onClick={(e) => handleDecreaseItem(item.id)}
-              >
-                <Remove fontSize="inherit" />
-              </IconButton>
-              <TextField
-                variant="outlined"
-                size="small"
-                type="number"
-                inputProps={{ min: 0 }}
-                sx={{
-                  maxWidth: '70px',
-                  '& input': {
-                    textAlign: 'center',
-                  },
-                }}
-                onChange={handleSetItemQuantity}
-                value={quantity}
-              />
-              <IconButton
-                aria-label="increase"
-                onClick={(e) => handleIncreaseItem(item.id)}
-              >
-                <Add fontSize="inherit" />
-              </IconButton>
-            </Box>
           </Grid>
         </Grid>
       </Grid>

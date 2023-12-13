@@ -49,7 +49,7 @@ const UpdateProductModal = ({
   const [updatedProduct, setUpdatedProduct] = useState<NewProduct>({
     title: product.title,
     description: product.description,
-    category: product.category.id,
+    category: product.category[0].id,
     img: product.img,
   });
 

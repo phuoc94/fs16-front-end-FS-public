@@ -2,12 +2,15 @@ import { Author } from './author.types';
 import { Category } from './category.types';
 
 export interface Product {
-  id: number;
+  id: string;
+  _id: string;
   title: string;
-  price: number;
   description: string;
-  category: Category;
+  category: Category[];
   author: Author[];
   img: string;
   creationAt: string;
+  publisher: string;
+  edition: string;
+  ISBN: string;
 }
