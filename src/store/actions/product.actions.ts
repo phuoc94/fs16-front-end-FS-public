@@ -15,6 +15,8 @@ export interface AddProductRequest {
 export interface ProductFilter {
   categoryName?: string;
   search?: string;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
   filter?: 0 | 1;
 }
 

@@ -18,14 +18,8 @@ import Filters from '../../containers/products/Filters';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { fetchCategories } from '../../store/actions/category.actions';
-import {
-  setSortBy,
-  sortByNameAZ,
-  sortByNameZA,
-  sortByNewest,
-  sortByPriceHighToLow,
-  sortByPriceLowToHigh,
-} from '../../store/reducers/product.slice';
+import { fetchProducts } from '../../store/actions/product.actions';
+import { setSortBy } from '../../store/reducers/product.slice';
 
 const ProductsPage = () => {
   const [page, setPage] = useState(0);
@@ -61,21 +55,13 @@ const ProductsPage = () => {
     dispatch(setSortBy(event.target.value));
 
     switch (event.target.value) {
-      case 'newest':
-        dispatch(sortByNewest());
+      case 'titleAZ':
+        dispatch(fetchProducts({ sortBy: 'title', sortOrder: 'asc' }));
         break;
-      case 'priceLow':
-        dispatch(sortByPriceLowToHigh());
+      case 'titleZA':
+        dispatch(fetchProducts({ sortBy: 'title', sortOrder: 'desc' }));
         break;
-      case 'priceHigh':
-        dispatch(sortByPriceHighToLow());
-        break;
-      case 'nameAZ':
-        dispatch(sortByNameZA());
-        break;
-      case 'nameZA':
-        dispatch(sortByNameAZ());
-        break;
+
       default:
         break;
     }
@@ -108,11 +94,8 @@ const ProductsPage = () => {
                   value={sortBy}
                   onChange={handleChangeSort}
                 >
-                  <MenuItem value="newest">Newest Arrivals</MenuItem>
-                  <MenuItem value="priceLow">Price: Low to High</MenuItem>
-                  <MenuItem value="priceHigh">Price: High to Low</MenuItem>
-                  <MenuItem value="nameAZ">Name: A to Z</MenuItem>
-                  <MenuItem value="nameZA">Name: Z to A</MenuItem>
+                  <MenuItem value="titleAZ">Title: A to Z</MenuItem>
+                  <MenuItem value="titleZA">Title: Z to A</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
