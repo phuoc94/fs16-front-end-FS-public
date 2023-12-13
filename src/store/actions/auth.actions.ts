@@ -5,6 +5,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { User } from '../../types/user.types';
 import { AUTH_API_URL } from '../../utils/constants';
 import { setCookies } from '../../utils/cookies';
+import { getAuthHeaders } from '../../utils/getAuthHeaders';
 
 interface LoginCredentials {
   email: string;
@@ -57,11 +58,7 @@ export const getProfile = createAsyncThunk(
   async (accessToken: string) => {
     const response: AxiosResponse<User> = await axios.get<User>(
       `${AUTH_API_URL}/profile`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+      getAuthHeaders(),
     );
 
     return response.data;

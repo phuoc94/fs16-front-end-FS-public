@@ -4,6 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Product } from '../../types/product.types';
 import { PRODUCT_API_URL } from '../../utils/constants';
+import { getAuthHeaders } from '../../utils/getAuthHeaders';
 
 export interface AddProductRequest {
   title: string;
@@ -23,7 +24,11 @@ export interface ProductFilter {
 export const addProduct = createAsyncThunk(
   'products/addProduct',
   async (product: AddProductRequest): Promise<Product> => {
-    const response = await axios.post(PRODUCT_API_URL, product);
+    const response = await axios.post(
+      PRODUCT_API_URL,
+      product,
+      getAuthHeaders(),
+    );
     return response.data;
   },
 );
