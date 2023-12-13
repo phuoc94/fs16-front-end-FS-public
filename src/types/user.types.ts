@@ -5,8 +5,6 @@ export interface User {
   lastName: string;
   address: string;
   phoneNumber: string;
-  role: {
-    title: string;
-  };
+  role: [{ title: string }];
   avatar: string;
 }

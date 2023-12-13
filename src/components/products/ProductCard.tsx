@@ -72,7 +72,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <IconButton aria-label="Add to Favorites">
             <FavoriteIcon />
           </IconButton>
-          {profile?.role.title === 'admin' && (
+          {profile?.role[0].title === 'Admin' && (
             <Fragment>
               <IconButton
                 aria-label="Delete"
