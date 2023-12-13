@@ -4,6 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { User } from '../../types/user.types';
 import { AUTH_API_URL } from '../../utils/constants';
+import { setCookies } from '../../utils/cookies';
 
 interface LoginCredentials {
   email: string;
@@ -27,6 +28,8 @@ export const login = createAsyncThunk(
     );
 
     const { accessToken } = response.data;
+
+    setCookies('accessToken', accessToken, 3600);
 
     return accessToken;
   },
@@ -60,6 +63,7 @@ export const getProfile = createAsyncThunk(
         },
       },
     );
+
     return response.data;
   },
 );

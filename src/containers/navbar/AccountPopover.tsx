@@ -37,10 +37,10 @@ const AccountPopover: React.FC = () => {
   const [openPopover, setOpenPopover] =
     React.useState<HTMLButtonElement | null>(null);
 
-  const { profile, accessToken } = useAppSelector((state) => state.auth);
+  const { profile } = useAppSelector((state) => state.auth);
 
   const refreshToken = cookies.get('refreshToken');
-
+  const accessToken = cookies.get('accessToken');
   const open = Boolean(openPopover);
 
   const id = open ? 'account-popover' : undefined;

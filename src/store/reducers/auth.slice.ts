@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { User } from '../../types/user.types';
-import { removeCookies } from '../../utils/cookies';
+import { cookies, removeCookies } from '../../utils/cookies';
 import {
   fetchNewAccessToken,
   getProfile,
@@ -28,6 +28,7 @@ export const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       removeCookies('refreshToken');
+      removeCookies('accessToken');
       state.accessToken = null;
       state.profile = null;
     },
@@ -54,6 +55,8 @@ export const authSlice = createSlice({
       })
       .addCase(getProfile.fulfilled, (state, action) => {
         state.isLoading = false;
+        const accessToken = cookies.get('accessToken');
+        state.accessToken = accessToken;
         state.profile = action.payload;
       })
       .addCase(getProfile.rejected, (state, action) => {
