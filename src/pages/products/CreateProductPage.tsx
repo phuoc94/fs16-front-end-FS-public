@@ -2,14 +2,18 @@ import { Fragment, useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+import { AutoMode } from '@mui/icons-material';
 import {
   Alert,
   Box,
   Button,
   Container,
   FormControl,
+  IconButton,
+  InputAdornment,
   InputLabel,
   MenuItem,
+  OutlinedInput,
   Select,
   SelectChangeEvent,
   Snackbar,
@@ -20,10 +24,11 @@ import {
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { addProduct } from '../../store/actions/product.actions';
+import { generateISBN13 } from '../../utils/generateISBN';
 
 interface NewProduct {
   title: string;
-  price: string;
+  ISBN: string;
   description: string;
   category: string;
 }
@@ -31,7 +36,7 @@ interface NewProduct {
 const CreateProductPage: React.FC = () => {
   const [newProduct, setProduct] = useState<NewProduct>({
     title: '',
-    price: '',
+    ISBN: '',
     description: '',
     category: '',
   });
@@ -68,11 +73,15 @@ const CreateProductPage: React.FC = () => {
     });
   };
 
+  const generateISBN = () => {
+    const newISBN = generateISBN13();
+    setProduct({ ...newProduct, ISBN: newISBN });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const productData = {
       ...newProduct,
-      price: Number(newProduct.price),
       categoryId: newProduct.category,
       images: 'https://picsum.photos/641/480',
     };
@@ -100,7 +109,7 @@ const CreateProductPage: React.FC = () => {
           }}
         >
           <Typography component="h1" variant="h5">
-            Create New Product
+            Create New Book
           </Typography>
           <Box
             component="form"
@@ -120,18 +129,30 @@ const CreateProductPage: React.FC = () => {
               value={newProduct.title}
               onChange={handleChange}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="price"
-              label="Price"
-              type="number"
-              id="price"
-              autoComplete="off"
-              value={newProduct.price}
-              onChange={handleChange}
-            />
+            <FormControl variant="outlined" fullWidth required margin="normal">
+              <InputLabel htmlFor="ISBN">ISBN</InputLabel>
+              <OutlinedInput
+                id="ISBN"
+                name="ISBN"
+                autoComplete="off"
+                autoFocus
+                value={newProduct.ISBN}
+                onChange={handleChange}
+                label="ISBN"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="generate ISBN"
+                      onClick={generateISBN}
+                      edge="end"
+                    >
+                      <AutoMode />
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+
             <TextField
               margin="normal"
               required
