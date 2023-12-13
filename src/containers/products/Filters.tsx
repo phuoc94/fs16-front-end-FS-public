@@ -36,12 +36,12 @@ const Filters = () => {
     if (event.target.value !== 'all') {
       setFilters({
         ...filters,
-        categoryId: event.target.value,
+        categoryName: event.target.value,
       });
     } else {
       setFilters({
         ...filters,
-        categoryId: null,
+        categoryName: null,
       });
     }
   };
@@ -74,7 +74,7 @@ const Filters = () => {
               </MenuItem>
               {categories.length > 0 &&
                 categories.map((category) => (
-                  <MenuItem value={category.id} key={category.id}>
+                  <MenuItem value={category.name} key={category.name}>
                     {category.name}
                   </MenuItem>
                 ))}

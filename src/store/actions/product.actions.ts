@@ -3,7 +3,7 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Product } from '../../types/product.types';
-import { CATEGORY_API_URL, PRODUCT_API_URL } from '../../utils/constants';
+import { PRODUCT_API_URL } from '../../utils/constants';
 
 export interface AddProductRequest {
   title: string;
@@ -13,9 +13,8 @@ export interface AddProductRequest {
 }
 
 export interface ProductFilter {
-  categoryId?: string;
-  price_min?: number;
-  price_max?: number;
+  categoryName?: string;
+  filter?: 0 | 1;
 }
 
 export const addProduct = createAsyncThunk(
@@ -44,17 +43,15 @@ export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
   async (filters?: ProductFilter): Promise<Product[]> => {
     if (!filters) {
-      filters = {};
+      filters = {
+        filter: 0,
+      };
     }
 
-    if (filters.price_min === undefined) {
-      filters.price_min = 1;
-    }
-    if (filters.price_max === undefined) {
-      filters.price_max = 9999999999;
-    }
+    filters.filter = 1;
 
-    const response = await axios.get(PRODUCT_API_URL);
+    const response = await axios.get(PRODUCT_API_URL, { params: filters });
+    console.log('🚀 ~ file: product.actions.ts:52 ~ response:', response);
     return response.data.data;
   },
 );
@@ -69,8 +66,10 @@ export const fetchProduct = createAsyncThunk(
 
 export const fetchCategoryProducts = createAsyncThunk(
   'products/fetchCategoryProducts',
-  async (id: number): Promise<Product[]> => {
-    const response = await axios.get(`${CATEGORY_API_URL}/${id}/products`);
+  async (name: string): Promise<Product[]> => {
+    const response = await axios.get(
+      `${PRODUCT_API_URL}/?filter=1&categoryName=${name}`,
+    );
     return response.data;
   },
 );

@@ -25,8 +25,8 @@ const CategoryPage = () => {
   }, [categoryId, dispatch]);
 
   useEffect(() => {
-    if (categoryId) {
-      dispatch(fetchCategoryProducts(Number(categoryId)));
+    if (category?.name) {
+      dispatch(fetchCategoryProducts(category?.name));
     }
   }, [categoryId, dispatch]);
 
