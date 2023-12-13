@@ -18,8 +18,12 @@ import Filters from '../../containers/products/Filters';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { fetchCategories } from '../../store/actions/category.actions';
-import { fetchProducts } from '../../store/actions/product.actions';
-import { setSortBy } from '../../store/reducers/product.slice';
+import {
+  setSortBy,
+  sortByNameAZ,
+  sortByNameZA,
+  sortByNewest,
+} from '../../store/reducers/product.slice';
 
 const ProductsPage = () => {
   const [page, setPage] = useState(0);
@@ -55,13 +59,15 @@ const ProductsPage = () => {
     dispatch(setSortBy(event.target.value));
 
     switch (event.target.value) {
-      case 'titleAZ':
-        dispatch(fetchProducts({ sortBy: 'title', sortOrder: 'asc' }));
+      case 'newest':
+        dispatch(sortByNewest());
         break;
-      case 'titleZA':
-        dispatch(fetchProducts({ sortBy: 'title', sortOrder: 'desc' }));
+      case 'nameAZ':
+        dispatch(sortByNameZA());
         break;
-
+      case 'nameZA':
+        dispatch(sortByNameAZ());
+        break;
       default:
         break;
     }
@@ -94,8 +100,9 @@ const ProductsPage = () => {
                   value={sortBy}
                   onChange={handleChangeSort}
                 >
-                  <MenuItem value="titleAZ">Title: A to Z</MenuItem>
-                  <MenuItem value="titleZA">Title: Z to A</MenuItem>
+                  <MenuItem value="newest">Newest Arrivals</MenuItem>
+                  <MenuItem value="nameAZ">Name: A to Z</MenuItem>
+                  <MenuItem value="nameZA">Name: Z to A</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
