@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AutoMode } from '@mui/icons-material';
 import {
   Alert,
+  Autocomplete,
   Box,
   Button,
   Container,
@@ -31,7 +32,17 @@ interface NewProduct {
   ISBN: string;
   description: string;
   category: string;
+  author: string[];
 }
+
+const top100Films = [
+  { title: 'The Shawshank Redemption', year: 1994 },
+  { title: 'The Godfather', year: 1972 },
+  { title: 'The Godfather: Part II', year: 1974 },
+  { title: 'The Dark Knight', year: 2008 },
+  { title: '12 Angry Men', year: 1957 },
+  { title: "Schindler's List", year: 1993 },
+];
 
 const CreateProductPage: React.FC = () => {
   const [newProduct, setProduct] = useState<NewProduct>({
@@ -39,6 +50,7 @@ const CreateProductPage: React.FC = () => {
     ISBN: '',
     description: '',
     category: '',
+    author: [],
   });
   const [showError, setShowError] = useState(false);
 
@@ -62,6 +74,16 @@ const CreateProductPage: React.FC = () => {
     setProduct({
       ...newProduct,
       [name]: value,
+    });
+  };
+
+  const handleAuthorChange = (
+    event: React.SyntheticEvent,
+    value: { title: string; year: number }[],
+  ) => {
+    setProduct({
+      ...newProduct,
+      author: value.map((v) => v.title),
     });
   };
 
@@ -129,6 +151,18 @@ const CreateProductPage: React.FC = () => {
               value={newProduct.title}
               onChange={handleChange}
             />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="author"
+              label="Author"
+              name="author"
+              autoComplete="off"
+              autoFocus
+              value={newProduct.author}
+              onChange={handleChange}
+            />
             <FormControl variant="outlined" fullWidth required margin="normal">
               <InputLabel htmlFor="ISBN">ISBN</InputLabel>
               <OutlinedInput
@@ -183,6 +217,31 @@ const CreateProductPage: React.FC = () => {
                   ))}
               </Select>
             </FormControl>
+
+            <Autocomplete
+              multiple
+              id="authors"
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              value={newProduct.author.map(
+                (author) =>
+                  top100Films.find((film) => film.title === author) || {
+                    title: '',
+                    year: 0,
+                  },
+              )}
+              onChange={handleAuthorChange}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  margin="normal"
+                  required
+                  fullWidth
+                  label="Author(s)"
+                  placeholder="Select Author(s)"
+                />
+              )}
+            />
 
             <Button
               type="submit"
