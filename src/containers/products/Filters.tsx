@@ -16,20 +16,17 @@ import {
 
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import useDebounce from '../../hooks/useDebounce';
 import { fetchProducts } from '../../store/actions/product.actions';
 
 const Filters = () => {
   const [filters, setFilters] = useState({});
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const debouncedFilter = useDebounce(filters, 500);
-
   const dispatch = useAppDispatch();
   const { categories } = useAppSelector((state) => state.categories);
 
   useEffect(() => {
-    dispatch(fetchProducts(debouncedFilter));
-  }, [dispatch, debouncedFilter]);
+    dispatch(fetchProducts(filters));
+  }, [dispatch, filters]);
 
   const handleChangeCategory = (event: SelectChangeEvent) => {
     setSelectedCategory(event.target.value);
