@@ -14,6 +14,7 @@ export interface AddProductRequest {
 
 export interface ProductFilter {
   categoryName?: string;
+  search?: string;
   filter?: 0 | 1;
 }
 
@@ -51,7 +52,6 @@ export const fetchProducts = createAsyncThunk(
     filters.filter = 1;
 
     const response = await axios.get(PRODUCT_API_URL, { params: filters });
-    console.log('🚀 ~ file: product.actions.ts:52 ~ response:', response);
     return response.data.data;
   },
 );

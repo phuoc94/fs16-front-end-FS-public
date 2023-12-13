@@ -1,5 +1,11 @@
+import { useEffect, useState } from 'react';
+
 import SearchIcon from '@mui/icons-material/Search';
 import { alpha, InputBase, styled } from '@mui/material/';
+
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import useDebounce from '../../hooks/useDebounce';
+import { fetchProducts } from '../../store/actions/product.actions';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -41,6 +47,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const SearchBox = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const dispatch = useAppDispatch();
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  useEffect(() => {
+    dispatch(fetchProducts({ search: debouncedSearchTerm }));
+  }, [debouncedSearchTerm, dispatch]);
+
   return (
     <Search>
       <SearchIconWrapper>
@@ -49,6 +67,8 @@ const SearchBox = () => {
       <StyledInputBase
         placeholder="Search…"
         inputProps={{ 'aria-label': 'search' }}
+        value={searchTerm}
+        onChange={handleSearchChange}
       />
     </Search>
   );
