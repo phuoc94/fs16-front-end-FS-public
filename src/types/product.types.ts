@@ -14,3 +14,8 @@ export interface Product {
   edition: string;
   ISBN: string;
 }
+export type Copy = {
+  _id: string;
+  book_id: string;
+  is_Available: boolean;
+};

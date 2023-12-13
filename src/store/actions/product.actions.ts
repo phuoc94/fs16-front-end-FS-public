@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { Product } from '../../types/product.types';
+import { Copy, Product } from '../../types/product.types';
 import { PRODUCT_API_URL } from '../../utils/constants';
 import { getAuthHeaders } from '../../utils/getAuthHeaders';
 
@@ -59,12 +59,21 @@ export const fetchProducts = createAsyncThunk(
     filters.filter = 1;
 
     const response = await axios.get(PRODUCT_API_URL, { params: filters });
+    const copies = await axios.get(`${PRODUCT_API_URL}/copy`);
 
-    const products = response.data.data.map((product: Product) => ({
-      ...product,
-      id: product._id,
-      _id: undefined,
-    }));
+    const products = response.data.data.map((product: Product) => {
+      const availableCopies = copies.data.filter(
+        (copy: Copy) =>
+          copy.book_id === product._id && copy.is_Available === true,
+      ).length;
+
+      return {
+        ...product,
+        id: product._id,
+        _id: undefined,
+        availableCopies: availableCopies,
+      };
+    });
 
     return products;
   },
