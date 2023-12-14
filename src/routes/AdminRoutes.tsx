@@ -3,15 +3,15 @@ import { useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { useAppDispatch } from '../hooks/useAppDispatch';
-import { useAppSelector } from '../hooks/useAppSelector';
 import { useIsAdmin } from '../hooks/useIsAdmin';
 import { fetchNewAccessToken } from '../store/actions/auth.actions';
 import { cookies } from '../utils/cookies';
 
 const AdminRoutes: React.FC = () => {
-  const { accessToken } = useAppSelector((state) => state.auth);
+  const accessToken = cookies.get('accessToken');
   const dispatch = useAppDispatch();
-  const isAdmin = useIsAdmin();
+  const { isAdmin, isLoading } = useIsAdmin();
+  console.log('🚀 ~ file: AdminRoutes.tsx:14 ~ isLoading:', isLoading);
 
   useEffect(() => {
     const refreshToken = cookies.get('refreshToken');
@@ -19,6 +19,10 @@ const AdminRoutes: React.FC = () => {
       dispatch(fetchNewAccessToken(refreshToken));
     }
   }, [dispatch]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return accessToken && isAdmin ? <Outlet /> : <Navigate to="/signin" />;
 };
