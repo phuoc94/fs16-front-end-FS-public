@@ -55,7 +55,7 @@ const AccountPopover: React.FC = () => {
 
   useEffect(() => {
     if (accessToken && !profile) {
-      dispatch(getProfile(accessToken));
+      dispatch(getProfile());
     }
   }, [dispatch, accessToken, profile]);
 

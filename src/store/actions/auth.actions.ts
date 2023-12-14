@@ -53,14 +53,11 @@ export const fetchNewAccessToken = createAsyncThunk(
   },
 );
 
-export const getProfile = createAsyncThunk(
-  'auth/getProfile',
-  async (accessToken: string) => {
-    const response: AxiosResponse<User> = await axios.get<User>(
-      `${AUTH_API_URL}/profile`,
-      getAuthHeaders(),
-    );
+export const getProfile = createAsyncThunk('auth/getProfile', async () => {
+  const response: AxiosResponse<User> = await axios.get<User>(
+    `${AUTH_API_URL}/profile`,
+    getAuthHeaders(),
+  );
 
-    return response.data;
-  },
-);
+  return response.data;
+});
