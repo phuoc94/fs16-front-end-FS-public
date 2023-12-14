@@ -10,7 +10,7 @@ import {
   updateProduct,
 } from '../actions/product.actions';
 
-type SortBy = 'newest' | 'priceLow' | 'priceHigh' | 'nameAZ' | 'nameZA';
+type SortBy = 'newest' | 'available' | 'nameAZ' | 'nameZA';
 
 interface ProductState {
   products: Product[];
@@ -23,7 +23,7 @@ interface ProductState {
 const initialState: ProductState = {
   products: [],
   product: null,
-  sortBy: 'newest',
+  sortBy: 'available',
   error: null,
   isLoading: false,
 };
@@ -38,6 +38,9 @@ export const productSlice = createSlice({
         const bDate = new Date(b.creationAt);
         return bDate.getTime() - aDate.getTime();
       });
+    },
+    sortByAvailable: (state) => {
+      state.products.sort((a, b) => b.availableCopies - a.availableCopies);
     },
     sortByNameAZ: (state) => {
       state.products.sort((a, b) => b.title.localeCompare(a.title));
@@ -62,6 +65,9 @@ export const productSlice = createSlice({
             const bDate = new Date(b.creationAt);
             return bDate.getTime() - aDate.getTime();
           });
+          break;
+        case 'available':
+          state.products.sort((a, b) => b.availableCopies - a.availableCopies);
           break;
         case 'nameAZ':
           state.products.sort((a, b) => a.title.localeCompare(b.title));
@@ -152,7 +158,12 @@ export const productSlice = createSlice({
   },
 });
 
-export const { sortByNameAZ, sortByNameZA, sortByNewest, setSortBy } =
-  productSlice.actions;
+export const {
+  sortByNameAZ,
+  sortByNameZA,
+  sortByNewest,
+  sortByAvailable,
+  setSortBy,
+} = productSlice.actions;
 
 export default productSlice.reducer;

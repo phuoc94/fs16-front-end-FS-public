@@ -20,6 +20,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { fetchCategories } from '../../store/actions/category.actions';
 import {
   setSortBy,
+  sortByAvailable,
   sortByNameAZ,
   sortByNameZA,
   sortByNewest,
@@ -62,6 +63,9 @@ const ProductsPage = () => {
       case 'newest':
         dispatch(sortByNewest());
         break;
+      case 'available':
+        dispatch(sortByAvailable());
+        break;
       case 'nameAZ':
         dispatch(sortByNameZA());
         break;
@@ -100,6 +104,7 @@ const ProductsPage = () => {
                   value={sortBy}
                   onChange={handleChangeSort}
                 >
+                  <MenuItem value="available">Available</MenuItem>
                   <MenuItem value="newest">Newest Arrivals</MenuItem>
                   <MenuItem value="nameAZ">Name: A to Z</MenuItem>
                   <MenuItem value="nameZA">Name: Z to A</MenuItem>
