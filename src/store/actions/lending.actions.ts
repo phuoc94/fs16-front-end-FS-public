@@ -27,6 +27,6 @@ export const fetchHistory = createAsyncThunk(
       `${PRODUCT_API_URL}/history/`,
       getAuthHeaders(),
     );
-    return response.data;
+    return response.data.history;
   },
 );

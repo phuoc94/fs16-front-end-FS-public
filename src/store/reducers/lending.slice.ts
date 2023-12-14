@@ -31,9 +31,6 @@ export const lendingSlice = createSlice({
       state.isLoading = false;
       state.error = action.error.message;
     });
-    builder.addCase(fetchHistory.pending, (state) => {
-      state.isLoading = true;
-    });
 
     builder.addCase(borrowBooks.pending, (state) => {
       state.isLoading = true;

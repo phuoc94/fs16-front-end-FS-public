@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import {
   AccountBox,
@@ -21,11 +21,20 @@ import {
 } from '@mui/material';
 
 import ListMenuItem from '../components/profile/ListMenuItem';
+import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
+import { fetchHistory } from '../store/actions/lending.actions';
 
 const ProfilePage = () => {
   const { profile } = useAppSelector((state) => state.auth);
+  const { myLoans } = useAppSelector((state) => state.lending);
 
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchHistory());
+  }, [dispatch]);
+  const nonReturnedLoans = myLoans.filter((loan) => !loan.returned);
   if (!profile) {
     return <Fragment />;
   }
@@ -41,7 +50,7 @@ const ProfilePage = () => {
             </ListMenuItem>
             <ListMenuItem>
               <ReceiptLong />
-              <Typography>Orders</Typography>
+              <Typography>All Loans</Typography>
             </ListMenuItem>
           </Stack>
         </Grid>
@@ -101,13 +110,19 @@ const ProfilePage = () => {
                   marginBottom={4}
                 >
                   <ReceiptLong fontSize="large" color="primary" />
-                  <Typography variant="h6">Orders</Typography>
+                  <Typography variant="h6">Active Loans</Typography>
                 </Box>
                 <Box marginTop={2} marginBottom={2}>
-                  <Typography>No orders found</Typography>
+                  {nonReturnedLoans.length > 0 ? (
+                    nonReturnedLoans.map((loan, index) => (
+                      <Typography key={index}>{loan.book.title}</Typography>
+                    ))
+                  ) : (
+                    <Typography>No Active loans</Typography>
+                  )}
                 </Box>
                 <Button variant="outlined" size="large">
-                  All Orders
+                  All Loans
                 </Button>
               </Paper>
             </Grid>
