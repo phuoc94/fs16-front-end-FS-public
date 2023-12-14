@@ -51,6 +51,33 @@ export const productSlice = createSlice({
     setSortBy: (state, action) => {
       state.sortBy = action.payload;
     },
+    decreaseAvailable: (state, action) => {
+      const booksIds = action.payload;
+      booksIds.forEach((id: string) => {
+        const productInProducts = state.products.find((p) => p.id === id);
+        if (productInProducts) {
+          productInProducts.availableCopies -= 1;
+        }
+
+        if (state.product && state.product.id === id) {
+          state.product.availableCopies -= 1;
+        }
+      });
+    },
+    increaseAvailable: (state, action) => {
+      const booksIds = action.payload;
+      booksIds.forEach((id: string) => {
+        const index = state.products.findIndex((p) => p.id === id);
+        state.products[index].availableCopies += 1;
+      });
+
+      if (state.product) {
+        const index = state.products.findIndex(
+          (p) => p.id === state.product?.id,
+        );
+        state.products[index].availableCopies += 1;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state) => {
@@ -164,6 +191,8 @@ export const {
   sortByNewest,
   sortByAvailable,
   setSortBy,
+  decreaseAvailable,
+  increaseAvailable,
 } = productSlice.actions;
 
 export default productSlice.reducer;

@@ -5,10 +5,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { PRODUCT_API_URL } from '../../utils/constants';
 import { getAuthHeaders } from '../../utils/getAuthHeaders';
+import {
+  decreaseAvailable,
+  increaseAvailable,
+} from '../reducers/product.slice';
 
 export const borrowBooks = createAsyncThunk(
   'lending/borrowBooks',
-  async (booksIds: string[]): Promise<Boolean> => {
+  async (booksIds: string[], { dispatch }): Promise<string[]> => {
     const body = {
       id: booksIds,
     };
@@ -17,13 +21,17 @@ export const borrowBooks = createAsyncThunk(
       body,
       getAuthHeaders(),
     );
-    return response.data;
+    if (response.data) {
+      dispatch(decreaseAvailable(booksIds));
+    }
+
+    return booksIds;
   },
 );
 
 export const returnBooks = createAsyncThunk(
   'lending/returnBooks',
-  async (booksIds: string[]): Promise<Boolean> => {
+  async (booksIds: string[], { dispatch }): Promise<string[]> => {
     const body = {
       id: booksIds,
     };
@@ -32,7 +40,12 @@ export const returnBooks = createAsyncThunk(
       body,
       getAuthHeaders(),
     );
-    return response.data;
+
+    if (response.data) {
+      dispatch(increaseAvailable(booksIds));
+    }
+
+    return booksIds;
   },
 );
 

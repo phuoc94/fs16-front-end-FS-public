@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { History } from '../../types/history.types';
-import { borrowBooks, fetchHistory } from '../actions/lending.actions';
+import {
+  borrowBooks,
+  fetchHistory,
+  returnBooks,
+} from '../actions/lending.actions';
 
 export interface LendingState {
   myLoans: History[];
@@ -39,6 +43,31 @@ export const lendingSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(borrowBooks.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
+    });
+
+    builder.addCase(returnBooks.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(returnBooks.fulfilled, (state, action) => {
+      const bookIds = action.payload;
+
+      bookIds.forEach((id: string) => {
+        const index = state.myLoans.findIndex(
+          (loan) => loan.book._id === id && loan.returned === false,
+        );
+
+        if (index !== -1) {
+          state.myLoans[index].returned = true;
+          state.myLoans[index].returned_Date = new Date().toISOString();
+        }
+      });
+
+      state.isLoading = false;
+    });
+
+    builder.addCase(returnBooks.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message;
     });

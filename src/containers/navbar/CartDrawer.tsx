@@ -71,7 +71,9 @@ const CartDrawer = () => {
             paddingX={2}
             alignItems="center"
           >
-            <Typography variant="h6">Shopping Cart</Typography>
+            <Typography variant="h6">
+              {totalItems} {totalItems > 1 ? 'Books' : 'Book'} in Cart
+            </Typography>
             <IconButton aria-label="close drawer" onClick={toggleDrawer}>
               <Close />
             </IconButton>
