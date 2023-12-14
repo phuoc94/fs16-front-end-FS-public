@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import {
   Avatar,
@@ -46,7 +46,7 @@ const AccountPopover: React.FC = () => {
   const id = open ? 'account-popover' : undefined;
 
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (refreshToken && !accessToken && !profile) {
       dispatch(fetchNewAccessToken(refreshToken));
@@ -69,6 +69,7 @@ const AccountPopover: React.FC = () => {
 
   const handleLogout = async () => {
     dispatch(logout());
+    navigate('/');
     handleClosePopover();
   };
 

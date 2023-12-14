@@ -54,11 +54,11 @@ const Filters = () => {
           aria-controls="category-filter"
           id="category-filter"
         >
-          <Typography>Category</Typography>
+          <Typography>Genre</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <FormControl fullWidth margin="normal">
-            <InputLabel id="category">Category</InputLabel>
+            <InputLabel id="category">Genre</InputLabel>
             <Select
               labelId="category"
               id="category"
