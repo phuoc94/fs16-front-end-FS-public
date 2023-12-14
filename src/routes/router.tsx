@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout';
 import HomePage from '../pages';
 import CartPage from '../pages/CartPage';
 import ErrorPage from '../pages/ErrorPage';
+import LoansPage from '../pages/LoansPage';
 import CreateProductPage from '../pages/products/CreateProductPage';
 import ProductPage from '../pages/products/ProductPage';
 import ProductsPage from '../pages/products/ProductsPage';
@@ -51,6 +52,16 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <ProfilePage />,
+          },
+        ],
+      },
+      {
+        path: '/loans',
+        element: <PrivateRoutes />,
+        children: [
+          {
+            index: true,
+            element: <LoansPage />,
           },
         ],
       },

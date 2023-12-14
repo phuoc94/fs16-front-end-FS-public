@@ -1,7 +1,6 @@
 import { Fragment, useEffect } from 'react';
 
 import {
-  AccountBox,
   Edit,
   EmailOutlined,
   LocalPhoneOutlined,
@@ -20,7 +19,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import ListMenuItem from '../components/profile/ListMenuItem';
+import SideBar from '../components/dashboard/SideBar';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
 import { fetchHistory } from '../store/actions/lending.actions';
@@ -42,18 +41,7 @@ const ProfilePage = () => {
   return (
     <Container sx={{ paddingTop: { xs: '1rem', md: '4rem' } }}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={3} sx={{ display: { xs: 'none', md: 'grid' } }}>
-          <Stack gap={1}>
-            <ListMenuItem>
-              <AccountBox />
-              <Typography>Profile</Typography>
-            </ListMenuItem>
-            <ListMenuItem>
-              <ReceiptLong />
-              <Typography>All Loans</Typography>
-            </ListMenuItem>
-          </Stack>
-        </Grid>
+        <SideBar />
         <Grid item xs={12} md={9}>
           <Typography variant="h5" marginBottom={2}>
             Profile
