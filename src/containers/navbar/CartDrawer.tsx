@@ -1,5 +1,6 @@
 import { Fragment, useState } from 'react';
 
+import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 
 import { Close, ShoppingCart } from '@mui/icons-material';
@@ -17,6 +18,7 @@ import {
 import CartItem from '../../components/cart/CartItem';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import { useIsAuthenticated } from '../../hooks/useAuth';
 import { borrowBooks } from '../../store/actions/lending.actions';
 import { removeAllItemsFromCart } from '../../store/reducers/cart.slice';
 
@@ -26,19 +28,30 @@ const CartDrawer = () => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { isAuthenticated } = useIsAuthenticated();
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);
   };
 
   const handleCheckout = () => {
     const bookIds = cartItems.map((item) => item.id);
-    try {
-      dispatch(borrowBooks(bookIds));
-      toggleDrawer();
-      dispatch(removeAllItemsFromCart());
-      navigate('/');
-    } catch (error) {
-      console.log(error);
+    if (isAuthenticated) {
+      try {
+        dispatch(borrowBooks(bookIds));
+        toggleDrawer();
+        dispatch(removeAllItemsFromCart());
+        enqueueSnackbar('Borrowed books successfully', {
+          variant: 'success',
+        });
+      } catch (error) {
+        enqueueSnackbar('Something went wrong', {
+          variant: 'error',
+        });
+      }
+    } else {
+      navigate('/signin');
     }
   };
 
@@ -76,7 +89,7 @@ const CartDrawer = () => {
           <Box padding={2}>
             <Stack gap={2} marginTop={2}>
               <Button fullWidth variant="contained" onClick={handleCheckout}>
-                Borrow Books
+                {isAuthenticated ? 'Borrow Books' : 'Sign In'}
               </Button>
 
               <Button fullWidth variant="outlined" onClick={toggleDrawer}>

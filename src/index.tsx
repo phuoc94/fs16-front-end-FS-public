@@ -2,6 +2,7 @@ import './styles/index.css';
 
 import React from 'react';
 
+import { SnackbarProvider } from 'notistack';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
@@ -16,7 +17,9 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <SnackbarProvider maxSnack={3}>
+        <RouterProvider router={router} />
+      </SnackbarProvider>
     </Provider>
   </React.StrictMode>,
 );

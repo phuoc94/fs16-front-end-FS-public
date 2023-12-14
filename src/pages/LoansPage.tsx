@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+import { useSnackbar } from 'notistack';
+
 import { Button, Container, Grid, Paper, Typography } from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 
@@ -13,13 +15,22 @@ const LoansPage = () => {
   const { myLoans } = useAppSelector((state) => state.lending);
 
   const dispatch = useAppDispatch();
-
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     dispatch(fetchHistory());
   }, [dispatch]);
 
   const handleReturn = (bookId: string) => {
-    dispatch(returnBooks([bookId]));
+    try {
+      dispatch(returnBooks([bookId]));
+      enqueueSnackbar('Returned book successfully', {
+        variant: 'success',
+      });
+    } catch (error) {
+      enqueueSnackbar('Something went wrong', {
+        variant: 'error',
+      });
+    }
   };
 
   const columns: GridColDef[] = [
