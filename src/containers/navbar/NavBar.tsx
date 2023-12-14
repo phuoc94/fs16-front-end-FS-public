@@ -14,13 +14,12 @@ import {
 } from '@mui/material';
 
 import SearchBox from '../../components/topnavbar/SearchBox';
-import { useAppSelector } from '../../hooks/useAppSelector';
+import { useIsAdmin } from '../../hooks/useIsAdmin';
 import AccountPopover from './AccountPopover';
 import CartDrawer from './CartDrawer';
 
 const NavBar = () => {
-  const { profile } = useAppSelector((state) => state.auth);
-  const isAdmin = profile?.role[0].title === 'Admin';
+  const isAdmin = useIsAdmin();
   return (
     <Box sx={{ flexGrow: 1 }} marginTop="135px">
       <AppBar position="fixed">

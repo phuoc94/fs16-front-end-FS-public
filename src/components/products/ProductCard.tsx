@@ -17,6 +17,7 @@ import {
 
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import { useIsAdmin } from '../../hooks/useIsAdmin';
 import { deleteProduct } from '../../store/actions/product.actions';
 import { addItemToCart } from '../../store/reducers/cart.slice';
 import { Product } from '../../types/product.types';
@@ -29,15 +30,14 @@ type ProductCardProps = {
 const ProductCard = ({ product }: ProductCardProps) => {
   const [openModal, setOpenModal] = useState(false);
 
-  const { profile } = useAppSelector((state) => state.auth);
   const { categories } = useAppSelector((state) => state.categories);
   const { cartItems } = useAppSelector((state) => state.cart);
 
+  const dispatch = useAppDispatch();
+  const isAdmin = useIsAdmin();
   const isInCart = (product: Product) => {
     return cartItems.some((item) => item.ISBN === product.ISBN);
   };
-  const dispatch = useAppDispatch();
-
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(addItemToCart({ product }));
   };
@@ -79,7 +79,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <IconButton aria-label="Add to Favorites">
             <FavoriteIcon />
           </IconButton>
-          {profile?.role[0].title === 'Admin' && (
+          {isAdmin && (
             <Fragment>
               <IconButton
                 aria-label="Delete"
