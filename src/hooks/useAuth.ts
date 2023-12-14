@@ -7,3 +7,11 @@ export const useIsAdmin = () => {
 
   return { isAdmin, isLoading };
 };
+
+export const useIsAuthenticated = () => {
+  const { isLoading, profile } = useAppSelector((state) => state.auth);
+
+  const isAuthenticated = !!profile;
+
+  return { isAuthenticated, isLoading };
+};

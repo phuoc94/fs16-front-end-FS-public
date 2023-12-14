@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { useAppDispatch } from '../hooks/useAppDispatch';
-import { useIsAdmin } from '../hooks/useIsAdmin';
+import { useIsAdmin } from '../hooks/useAuth';
 import { fetchNewAccessToken } from '../store/actions/auth.actions';
 import { cookies } from '../utils/cookies';
 

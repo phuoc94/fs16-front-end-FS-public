@@ -14,12 +14,14 @@ import {
 } from '@mui/material';
 
 import SearchBox from '../../components/topnavbar/SearchBox';
-import { useIsAdmin } from '../../hooks/useIsAdmin';
+import { useIsAdmin, useIsAuthenticated } from '../../hooks/useAuth';
 import AccountPopover from './AccountPopover';
 import CartDrawer from './CartDrawer';
 
 const NavBar = () => {
-  const isAdmin = useIsAdmin();
+  const { isAdmin } = useIsAdmin();
+  const { isAuthenticated } = useIsAuthenticated();
+
   return (
     <Box sx={{ flexGrow: 1 }} marginTop="135px">
       <AppBar position="fixed">
@@ -93,6 +95,13 @@ const NavBar = () => {
               <Link to="/products" component={RouterLink}>
                 Products
               </Link>
+
+              {isAuthenticated && (
+                <Link to="/loans" component={RouterLink}>
+                  Loans
+                </Link>
+              )}
+
               {isAdmin && (
                 <Link to="/create-product" component={RouterLink}>
                   Add Book

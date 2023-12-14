@@ -17,7 +17,7 @@ import {
 
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { useIsAdmin } from '../../hooks/useIsAdmin';
+import { useIsAdmin } from '../../hooks/useAuth';
 import { deleteProduct } from '../../store/actions/product.actions';
 import { addItemToCart } from '../../store/reducers/cart.slice';
 import { Product } from '../../types/product.types';
@@ -34,7 +34,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const { cartItems } = useAppSelector((state) => state.cart);
 
   const dispatch = useAppDispatch();
-  const isAdmin = useIsAdmin();
+  const { isAdmin } = useIsAdmin();
   const isInCart = (product: Product) => {
     return cartItems.some((item) => item.ISBN === product.ISBN);
   };
