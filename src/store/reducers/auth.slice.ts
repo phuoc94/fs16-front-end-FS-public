@@ -32,6 +32,9 @@ export const authSlice = createSlice({
       state.accessToken = null;
       state.profile = null;
     },
+    resetLoading: (state) => {
+      state.isLoading = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -80,6 +83,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, resetLoading } = authSlice.actions;
 
 export default authSlice.reducer;

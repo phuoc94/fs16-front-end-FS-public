@@ -25,6 +25,7 @@ import {
   getProfile,
   login,
 } from '../store/actions/auth.actions';
+import { resetLoading } from '../store/reducers/auth.slice';
 import { cookies } from '../utils/cookies';
 
 const SignIn: React.FC = () => {
@@ -37,6 +38,12 @@ const SignIn: React.FC = () => {
   const refreshToken = cookies.get('refreshToken');
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetLoading());
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     if (error) {
