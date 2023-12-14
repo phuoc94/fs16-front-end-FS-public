@@ -15,21 +15,31 @@ import {
 } from '@mui/material';
 
 import CartItem from '../../components/cart/CartItem';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import { borrowBooks } from '../../store/actions/lending.actions';
+import { removeAllItemsFromCart } from '../../store/reducers/cart.slice';
 
 const CartDrawer = () => {
   const { totalItems, cartItems } = useAppSelector((state) => state.cart);
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);
   };
 
   const handleCheckout = () => {
-    toggleDrawer();
-    navigate('/cart');
+    const bookIds = cartItems.map((item) => item.id);
+    try {
+      dispatch(borrowBooks(bookIds));
+      toggleDrawer();
+      dispatch(removeAllItemsFromCart());
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -66,11 +76,11 @@ const CartDrawer = () => {
           <Box padding={2}>
             <Stack gap={2} marginTop={2}>
               <Button fullWidth variant="contained" onClick={handleCheckout}>
-                Checkout
+                Borrow Books
               </Button>
 
               <Button fullWidth variant="outlined" onClick={toggleDrawer}>
-                Continue shopping
+                Continue Searching
               </Button>
             </Stack>
           </Box>
