@@ -1,5 +1,7 @@
 import { Fragment, useEffect } from 'react';
 
+import { Link } from 'react-router-dom';
+
 import {
   Edit,
   EmailOutlined,
@@ -109,7 +111,12 @@ const ProfilePage = () => {
                     <Typography>No Active loans</Typography>
                   )}
                 </Box>
-                <Button variant="outlined" size="large">
+                <Button
+                  variant="outlined"
+                  size="large"
+                  to="/loans"
+                  component={Link}
+                >
                   All Loans
                 </Button>
               </Paper>

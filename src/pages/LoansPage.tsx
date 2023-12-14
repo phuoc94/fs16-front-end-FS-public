@@ -27,6 +27,8 @@ const LoansPage = () => {
       field: 'cover',
       headerName: 'Cover',
       width: 60,
+      sortable: false,
+      disableColumnMenu: true,
       renderCell: (params) => (
         <img
           src={params.row.book.img}
