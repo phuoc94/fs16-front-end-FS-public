@@ -1,4 +1,4 @@
-export const BASE_API_URL = 'http://localhost:3001/api/v1/';
+export const BASE_API_URL = process.env.REACT_APP_BASE_API_URL || '';
 
 export const AUTH_API_URL = `${BASE_API_URL}users`;
 export const PRODUCT_API_URL = `${BASE_API_URL}books`;
